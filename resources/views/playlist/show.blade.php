@@ -1,6 +1,3 @@
-<?php
+{{$playlist->title}}
 
-@foreach ($playlist as $song)
-    {{$song->title}}
-    {{$song->artist}}
-@endforeach
+

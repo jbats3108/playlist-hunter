@@ -8,8 +8,9 @@ class PlaylistController extends Controller
 {
     public function show(int $playlistId)
     {
+        $playlist = Playlist::find($playlistId);
         return view('playlist.show', [
-            'playlist' => Playlist::firstWhere('id', $playlistId)
+            'playlist' => $playlist
         ]);
     }
 }

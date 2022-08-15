@@ -29,5 +29,20 @@ class PlaylistTest extends TestCase
     }
 
     /** @test */
-    public function it_contains_songs() {}
+    public function it_contains_songs()
+    {
+        $playlist = Playlist::factory()->create([]);
+
+        $songs = Song::factory()->count(3)->create(
+            [
+                'playlist_id' => $playlist->id
+            ]
+        );
+
+        $playlistSongs = $playlist->songs();
+
+        $this->assertSame($songs,$playlistSongs);
+
+
+    }
 }

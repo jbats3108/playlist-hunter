@@ -3,6 +3,7 @@
 namespace Tests\Unit\Models;
 
 use App\Models\Playlist;
+use App\Models\Song;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -39,9 +40,11 @@ class PlaylistTest extends TestCase
             ]
         );
 
-        $playlistSongs = $playlist->songs();
+        $playlistSongs = $playlist->songs()->get();
 
-        $this->assertSame($songs,$playlistSongs);
+        $songs->each(
+            fn($song) => $this->assertTrue($playlistSongs->contains($song))
+        );
 
 
     }

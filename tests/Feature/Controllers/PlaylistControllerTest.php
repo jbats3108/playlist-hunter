@@ -15,7 +15,6 @@ class PlaylistControllerTest extends TestCase
     public function it_displays_a_playlist()
     {
         // Given
-
         $playlist = Playlist::factory()->create([]);
 
         $songs = Song::factory()->count(3)->create(
@@ -23,11 +22,12 @@ class PlaylistControllerTest extends TestCase
         );
 
         // When
-        $response = $this->get('playlists/' . $playlist->id)->assertSuccessful();
+        $response = $this->get('playlists/' . $playlist->id)->assertSuccessful(
+        );
 
         // Then
         $response->assertSee($playlist->title);
-        $songs->each(function ($song) use ($response){
+        $songs->each(function ($song) use ($response) {
             $response->assertSee($song->title);
             $response->assertSee($song->artist);
         });

@@ -3,14 +3,26 @@
 namespace App\Http\Controllers;
 
 use App\Models\Playlist;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 
 class PlaylistController extends Controller
 {
-    public function show(int $playlistId)
+    public function index(): Factory | View | Application
     {
-        $playlist = Playlist::find($playlistId);
+        return view(
+            'playlist.index',
+            [
+                'playlists' => Playlist::all()
+            ]
+        );
+    }
+
+    public function show(int $playlistId): Factory | View | Application
+    {
         return view('playlist.show', [
-            'playlist' => $playlist
+            'playlist' => Playlist::find($playlistId)
         ]);
     }
 }

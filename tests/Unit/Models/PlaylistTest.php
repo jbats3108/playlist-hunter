@@ -24,9 +24,7 @@ class PlaylistTest extends TestCase
             ]
         );
 
-        $search = Playlist::find($playlist->id);
-
-        $this->assertSame($title, $search->title);
+        $this->assertSame($title, $playlist->title);
     }
 
     /** @test */
@@ -40,10 +38,10 @@ class PlaylistTest extends TestCase
             ]
         );
 
-        $playlistSongs = $playlist->songs()->get();
-
         $songs->each(
-            fn($song) => $this->assertTrue($playlistSongs->contains($song))
+            fn($song) => $this->assertTrue(
+                $playlist->songs()->get()->contains($song)
+            )
         );
 
 

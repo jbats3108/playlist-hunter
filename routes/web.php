@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/playlists/{id}', [PlaylistController::class,'show']);
+Route::get('playlists', [PlaylistController::class, 'index']);
+Route::get('playlists/{id}', [PlaylistController::class,'show']);
 
 require __DIR__.'/auth.php';

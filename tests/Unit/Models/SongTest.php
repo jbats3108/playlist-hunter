@@ -2,6 +2,7 @@
 
 namespace Tests\Unit\Models;
 
+use App\Models\Playlist;
 use App\Models\Song;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -45,5 +46,20 @@ class SongTest extends TestCase
     }
 
     /** @test */
-    public function it_belongs_to_a_playlist() {}
+    public function it_belongs_to_a_playlist()
+    {
+        $playlist = Playlist::factory()->create([]);
+
+        $song = Song::factory()->create(
+            [
+                'playlist_id' => $playlist->id
+            ]
+        );
+
+        $playlist = Playlist::find($playlist->id);
+
+        $songPlaylist = $song->playlist();
+
+        $this->assertEquals($playlist->refresh(),$songPlaylist);
+    }
 }

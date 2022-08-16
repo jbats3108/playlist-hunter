@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Song extends Model
 {
     use HasFactory;
+
+    public function playlist()
+    {
+        return $this->belongsTo(Playlist::class)->first();
+    }
 }

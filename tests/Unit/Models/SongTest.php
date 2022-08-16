@@ -29,7 +29,20 @@ class SongTest extends TestCase
     }
 
     /** @test */
-    public function it_has_an_artist() {}
+    public function it_has_an_artist()
+    {
+        $artist = $this->faker->word();
+
+        $song = Song::factory()->create(
+            [
+                'artist' => $artist
+            ]
+        );
+
+        $search = Song::find($song->id);
+
+        $this->assertSame($artist, $search->artist);
+    }
 
     /** @test */
     public function it_belongs_to_a_playlist() {}

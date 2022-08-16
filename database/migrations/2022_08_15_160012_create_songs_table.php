@@ -17,6 +17,7 @@ return new class extends Migration {
             $table->timestamps();
             $table->foreignId('playlist_id')->nullable();
             $table->string('title');
+            $table->string('artist');
         });
     }
 

@@ -24,9 +24,7 @@ class SongTest extends TestCase
             ]
         );
 
-        $search = Song::find($song->id);
-
-        $this->assertSame($title, $search->title);
+        $this->assertSame($title, $song->title);
     }
 
     /** @test */
@@ -40,9 +38,7 @@ class SongTest extends TestCase
             ]
         );
 
-        $search = Song::find($song->id);
-
-        $this->assertSame($artist, $search->artist);
+        $this->assertSame($artist, $song->artist);
     }
 
     /** @test */
@@ -60,6 +56,6 @@ class SongTest extends TestCase
 
         $songPlaylist = $song->playlist();
 
-        $this->assertEquals($playlist->refresh(),$songPlaylist);
+        $this->assertEquals($playlist->refresh(), $songPlaylist);
     }
 }

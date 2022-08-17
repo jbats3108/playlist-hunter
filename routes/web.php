@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\PlaylistController;
 use Illuminate\Support\Facades\Route;
+use Laravel\Socialite\Facades\Socialite;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,6 +16,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('playlists', [PlaylistController::class, 'index']);
-Route::get('playlists/{id}', [PlaylistController::class,'show']);
+Route::get('playlists/{id}', [PlaylistController::class, 'show']);
 
-require __DIR__.'/auth.php';
+Route::get('/auth/redirect', fn() => Socialite::driver('spotify')->redirect());
+
+require __DIR__ . '/auth.php';

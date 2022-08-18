@@ -43,7 +43,5 @@ class PlaylistTest extends TestCase
                 $playlist->songs()->get()->contains($song)
             )
         );
-
-
     }
 }

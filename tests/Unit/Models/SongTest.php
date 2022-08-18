@@ -58,4 +58,16 @@ class SongTest extends TestCase
 
         $this->assertEquals($playlist->refresh(), $songPlaylist);
     }
+
+    /** @test */
+    public function it_has_a_url()
+    {
+        $song = Song::factory()->create([]);
+
+        $baseUrl = 'https://www.ultimate-guitar.com/search.php?search_type=title&value=';
+
+        $searchString = rawurlencode(sprintf('%s %s', $song->title, $song->artist));
+
+        $this->assertSame($baseUrl . $searchString,$song->url());
+    }
 }

@@ -18,6 +18,7 @@ class SongTest extends TestCase
     {
         $title = $this->faker->word();
 
+        /** @var Song $song */
         $song = Song::factory()->create(
             [
                 'title' => $title
@@ -32,6 +33,7 @@ class SongTest extends TestCase
     {
         $artist = $this->faker->word();
 
+        /** @var Song $song */
         $song = Song::factory()->create(
             [
                 'artist' => $artist
@@ -44,8 +46,10 @@ class SongTest extends TestCase
     /** @test */
     public function it_belongs_to_a_playlist()
     {
+        /** @var Playlist $playlist */
         $playlist = Playlist::factory()->create([]);
 
+        /** @var Song $song */
         $song = Song::factory()->create(
             [
                 'playlist_id' => $playlist->id
@@ -62,12 +66,15 @@ class SongTest extends TestCase
     /** @test */
     public function it_has_a_url()
     {
+        /** @var Song $song */
         $song = Song::factory()->create([]);
 
         $baseUrl = 'https://www.ultimate-guitar.com/search.php?search_type=title&value=';
 
-        $searchString = rawurlencode(sprintf('%s %s', $song->title, $song->artist));
+        $searchString = rawurlencode(
+            sprintf('%s %s', $song->title, $song->artist)
+        );
 
-        $this->assertSame($baseUrl . $searchString,$song->url());
+        $this->assertSame($baseUrl . $searchString, $song->url());
     }
 }

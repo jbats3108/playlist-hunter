@@ -15,8 +15,10 @@ class PlaylistControllerTest extends TestCase
     public function it_displays_a_playlist()
     {
         // Given
+        /** @var Playlist $playlist */
         $playlist = Playlist::factory()->create([]);
 
+        /** @var Song $song */
         Song::factory()->count(3)->create(
             ['playlist_id' => $playlist->id]
         );
@@ -30,6 +32,7 @@ class PlaylistControllerTest extends TestCase
         $playlist->songs()->each(function ($song) use ($response) {
             $response->assertSee($song->title);
             $response->assertSee($song->artist);
+            $response->assertSee($song->url());
         });
     }
 

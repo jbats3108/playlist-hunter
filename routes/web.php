@@ -15,10 +15,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::view('/dashboard', 'dashboard')->name('dashboard');
+
 Route::get('playlists', [PlaylistController::class, 'index']);
 Route::get('playlists/{id}', [PlaylistController::class, 'show']);
 
 Route::get('spotify/login', [SpotifyController::class, 'login']);
-Route::get(Config::get('services.spotify.redirect'), [SpotifyController::class, 'callback']);
+Route::get(
+    Config::get('services.spotify.redirect'),
+    [SpotifyController::class, 'callback']
+);
 
 require __DIR__ . '/auth.php';

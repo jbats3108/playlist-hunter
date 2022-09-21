@@ -14,7 +14,13 @@ class SpotifyController extends Controller
 {
     public function login(): RedirectResponse | \Illuminate\Http\RedirectResponse
     {
-        return Socialite::driver('spotify')->redirect();
+        return Socialite::driver('spotify')
+            ->scopes(
+                [
+                    'user-read-email'
+                ]
+            )
+            ->redirect();
     }
 
     public function callback(): Redirector | Application | \Illuminate\Http\RedirectResponse
@@ -29,13 +35,14 @@ class SpotifyController extends Controller
                 'name'                  => $spotifyUser->getName(),
                 'email'                 => $spotifyUser->getEmail(),
                 'spotify_token'         => $spotifyUser->token,
-                'spotify_refresh_token' => $spotifyUser->refreshToken
+                'spotify_refresh_token' => $spotifyUser->refreshToken,
+                'spotify_id'            => $spotifyUser->getId()
             ]
         );
 
         Auth::login($user);
 
-        return redirect('playlists');
+        return redirect('dashboard');
 
     }
 }

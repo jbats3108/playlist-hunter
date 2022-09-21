@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Auth;
 
+use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Laravel\Socialite\Facades\Socialite;
 use Laravel\Socialite\Two\User as SpotifyUser;
@@ -23,9 +24,7 @@ class SpotifyControllerTest extends TestCase
     /** @test */
     public function it_returns_a_logged_in_user_to_the_dashboard()
     {
-        $this->withoutExceptionHandling();
         $spotifyUser = Mockery::mock(SpotifyUser::class);
-
 
         $spotifyId = 'fooBar';
         $spotifyEmail = 'foo@bar.com';
@@ -50,7 +49,40 @@ class SpotifyControllerTest extends TestCase
             ]
         );
 
+    }
 
+    /** @test */
+    public function it_retrieves_a_users_playlists()
+    {
+        // Given
+        $user = $this->loginWithSpotify();
+
+        // When
+        $playlistsPage = $this->actingAs($user)->call('GET', 'playlists');
+
+        // Then
+        $playlistsPage->assertOk();
+    }
+
+    private function loginWithSpotify(): User
+    {
+        $spotifyUser = Mockery::mock(SpotifyUser::class);
+
+        $spotifyId = 'fooBar';
+        $spotifyEmail = 'foo@bar.com';
+
+        $spotifyUser->shouldReceive('getId')
+            ->andReturn($spotifyId)
+            ->shouldReceive('getEmail')
+            ->andReturn($spotifyEmail)
+            ->shouldReceive('getName')
+            ->andReturn($spotifyId);
+
+        Socialite::shouldReceive('driver->user')->andReturn($spotifyUser);
+
+        $this->call('GET', '/spotify/callback');
+
+        return User::firstWhere('spotify_id', $spotifyId);
     }
 
 }

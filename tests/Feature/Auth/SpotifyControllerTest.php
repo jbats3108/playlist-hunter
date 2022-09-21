@@ -23,23 +23,33 @@ class SpotifyControllerTest extends TestCase
     /** @test */
     public function it_returns_a_logged_in_user_to_the_dashboard()
     {
+        $this->withoutExceptionHandling();
         $spotifyUser = Mockery::mock(SpotifyUser::class);
 
+
+        $spotifyId = 'fooBar';
+        $spotifyEmail = 'foo@bar.com';
+
         $spotifyUser->shouldReceive('getId')
-            ->andReturn('fooBar')
+            ->andReturn($spotifyId)
             ->shouldReceive('getEmail')
-            ->andReturn('foo@bar.com');
+            ->andReturn($spotifyEmail)
+            ->shouldReceive('getName')
+            ->andReturn($spotifyId);
 
         Socialite::shouldReceive('driver->user')->andReturn($spotifyUser);
 
-        $response = $this->call('GET', '/spotify/callback');
+        $this->call('GET', '/spotify/callback')->assertRedirect(
+            'dashboard'
+        );
 
-        $this->assertDatabaseHas('users',
-        [
-            'spotify_id' => 'fooBar'
-        ]);
+        $this->assertDatabaseHas(
+            'users',
+            [
+                'spotify_id' => $spotifyId
+            ]
+        );
 
-        $response->assertRedirect('dashboard');
 
     }
 

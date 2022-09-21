@@ -33,7 +33,8 @@ return [
     'spotify' => [
         'client_id' => env('SPOTIFY_CLIENT_ID'),
         'client_secret' => env('SPOTIFY_CLIENT_SECRET'),
-        'redirect' => env('SPOTIFY_REDIRECT')
+        'redirect' => env('SPOTIFY_REDIRECT'),
+        'api_base' => env('SPOTIFY_WEB_API_BASE')
     ]
 
 ];

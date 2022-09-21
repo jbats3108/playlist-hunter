@@ -44,6 +44,12 @@ use Laravel\Sanctum\PersonalAccessToken;
  * @method static Builder|User whereRememberToken($value)
  * @method static Builder|User whereUpdatedAt($value)
  * @mixin Eloquent
+ * @property string|null $spotify_id
+ * @method static Builder|User whereSpotifyId($value)
+ * @property string|null $spotify_token
+ * @method static Builder|User whereSpotifyToken($value)
+ * @property string|null $spotify_refresh_token
+ * @method static Builder|User whereSpotifyRefreshToken($value)
  */
 class User extends Authenticatable
 {
@@ -58,7 +64,9 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'spotify_id'
+        'spotify_id',
+        'spotify_token',
+        'spotify_refresh_token'
     ];
 
     /**
@@ -79,4 +87,14 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function spotifyToken(): ?string
+    {
+        return $this->spotify_token;
+    }
+
+    public function spotifyRefreshToken(): ?string
+    {
+        return $this->spotify_refresh_token;
+    }
 }

@@ -26,4 +26,38 @@ class UserTest extends TestCase
         // Then
         $this->assertSame($spotifyId, $user->spotify_id);
     }
+
+    /** @test */
+    public function it_has_a_spotify_token()
+    {
+        // Given
+        $spotifyToken = 'fooBar';
+
+        // When
+        $user = User::factory()->create(
+            [
+                'spotify_token' => $spotifyToken
+            ]
+        );
+
+        // Then
+        $this->assertSame($spotifyToken, $user->spotifyToken());
+    }
+
+    /** @test */
+    public function it_has_a_spotify_refresh_token()
+    {
+        // Given
+        $spotifyToken = 'fooBar';
+
+        // When
+        $user = User::factory()->create(
+            [
+                'spotify_refresh_token' => $spotifyToken
+            ]
+        );
+
+        // Then
+        $this->assertSame($spotifyToken, $user->spotifyRefreshToken());
+    }
 }

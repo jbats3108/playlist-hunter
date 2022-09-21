@@ -20,6 +20,8 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password')->nullable();
             $table->string('spotify_id')->nullable();
+            $table->string('spotify_token')->nullable();
+            $table->string('spotify_refresh_token')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

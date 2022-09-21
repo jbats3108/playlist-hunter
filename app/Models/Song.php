@@ -29,6 +29,7 @@ use Illuminate\Support\Carbon;
  * @method static Builder|Song whereTitle($value)
  * @method static Builder|Song whereUpdatedAt($value)
  * @mixin Eloquent
+ * @method static Builder|Song whereArtist($value)
  */
 class Song extends Model
 {

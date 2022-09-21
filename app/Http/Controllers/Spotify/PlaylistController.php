@@ -2,25 +2,46 @@
 
 namespace App\Http\Controllers\Spotify;
 
+use App\Data\Spotify\PlaylistData\PlaylistData;
 use App\Http\Controllers\Controller;
-use App\Models\User;
+use Auth;
 use Config;
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\GuzzleException;
 
 class PlaylistController extends Controller
 {
-    public function index(User $user)
+    /**
+     * @throws GuzzleException
+     */
+    public function index()
     {
+        $user = Auth::user();
+
         $client = new Client(
             [
                 'base_uri' => Config::get('services.spotify.api_base'),
-                'headers' => [
-                    'Authorization' => 'Bearer ' . $user->spotifyAuthToken(),
-                    'Content-Type' => 'application/json'
+                'headers'  => [
+                    'Authorization' => 'Bearer ' . $user->spotifyToken(),
+                    'Content-Type'  => 'application/json'
                 ]
             ]
         );
 
-        return $client->get('me/playlists');
+        $playlistResponse = $client
+            ->get('me/playlists')
+            ->getBody()
+            ->getContents();
+
+        $playlists = PlaylistData::collection(
+            json_decode($playlistResponse)->items
+        );
+
+        return view(
+            'playlist.index',
+            [
+                'playlists' => $playlists
+            ]
+        );
     }
 }

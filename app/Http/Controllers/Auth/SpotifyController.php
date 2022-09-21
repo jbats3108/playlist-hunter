@@ -17,7 +17,8 @@ class SpotifyController extends Controller
         return Socialite::driver('spotify')
             ->scopes(
                 [
-                    'user-read-email'
+                    'user-read-email',
+                    'playlist-read-private'
                 ]
             )
             ->redirect();
@@ -43,6 +44,5 @@ class SpotifyController extends Controller
         Auth::login($user);
 
         return redirect('dashboard');
-
     }
 }

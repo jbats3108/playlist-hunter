@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\SpotifyController;
-use App\Http\Controllers\PlaylistController;
+use App\Http\Controllers\Spotify\PlaylistController;
 use Illuminate\Support\Facades\Route;
 
 /*
